@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Brain Trainer</string>
+
+    <string name="loading">Loading</string>
+
+    <!--Main menu strings-->
+    <string name="menu">MAIN MENU</string>
+    <string name="newgame">New Game</string>
+    <string name="conti">Continue</string>
+    <string name="about">About</string>
+    <string name="exit">Exit</string>
+    <string name="menuhelper">Please select an option from the menu bellow.</string>
 </resources>
