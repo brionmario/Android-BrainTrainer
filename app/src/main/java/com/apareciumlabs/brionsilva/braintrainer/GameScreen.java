@@ -15,6 +15,9 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
     //Declaring number pad
     Button onebtn,twoBtn,threeBtn,fourBtn,fiveBtn,sixBtn,sevenBtn,eightBtn,nineBtn,zeroBtn;
 
+    //String to store the difficulty being passed
+    String difficulty;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,11 +25,14 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
 
         Intent intent = getIntent();
 
-        String diff = intent.getStringExtra("Difficulty");
+        difficulty = intent.getStringExtra("Difficulty");
 
         //initializing the question area
         questionTV = (TextView) findViewById(R.id.questionTextView);
         answerTV = (TextView) findViewById(R.id.answerTextView);
+
+        //setting the answer to be ? initially
+        answerTV.setText("?");
 
         //initializing the result text view
         resultTV = (TextView) findViewById(R.id.resultTextView);
@@ -72,10 +78,18 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
         zeroBtn = (Button) findViewById(R.id.zeroBtn);
         zeroBtn.setOnClickListener(this);
 
+        //Generate a question
+        QuestionGenerator questionGenerator = new QuestionGenerator(difficulty);
+        questionTV.setText(questionGenerator.generateQuestion());
+
     }
 
     @Override
     public void onClick(View v) {
+
+        if(answerTV.getText().toString().equals("?")){
+            answerTV.setText(null);
+        }
 
         switch(v.getId()){
 
@@ -123,7 +137,7 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
 
             //utility buttons
             case R.id.delBtn:{
-                answerTV.setText("?");
+                answerTV.setText(null);
                 break;
             }
             case R.id.hashBtn:{
@@ -131,7 +145,16 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
                 break;
             }
             case R.id.minusBtn:{
-                //backspace action
+                //backspace action implementation
+                String answerStr = answerTV.getText().toString();
+                if (answerStr.length() >1 ) {
+                    //begin index is 0 and the required end index has to be answerStr.length() - 1
+                    answerStr = answerStr.substring(0, answerStr.length() - 1);
+                    answerTV.setText(answerStr);
+                }
+                else if (answerStr.length() <=1 ) {
+                    answerTV.setText("0");
+                }
                 break;
             }
 
