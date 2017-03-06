@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,6 +89,8 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
                 String selectedDifficulty = Difficulty[item].toString();
                 Intent intent = new Intent(getBaseContext(), GameScreen.class);
                 intent.putExtra("Difficulty", selectedDifficulty);
+
+                Toast.makeText(MainMenu.this, selectedDifficulty + " Difficulty selected",Toast.LENGTH_LONG).show();
 
                 //start the Game Screen activity
                 startActivity(intent);

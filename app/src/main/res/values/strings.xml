@@ -10,4 +10,13 @@
     <string name="about">About</string>
     <string name="exit">Exit</string>
     <string name="menuhelper">Please select an option from the menu bellow.</string>
+
+    <!--game view strings-->
+    <string name="lblGuess">Guess&#160;:&#160;</string>
+    <string name="lblQuestion">Question</string>
+    <string name="lblAnswer">\?</string>
+    <string name="lblEqual">&#160;=&#160;</string>
+    <string name="lblHint">Hints</string>
+    <string name="lblTime">Time Left : </string>
+    <string name="timerTextView">10 Seconds</string>
 </resources>
