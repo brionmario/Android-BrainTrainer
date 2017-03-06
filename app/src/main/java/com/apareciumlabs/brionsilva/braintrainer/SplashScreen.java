@@ -21,11 +21,11 @@ public class SplashScreen extends AppCompatActivity {
             public void run() {
                 synchronized (this) {
                     try {
-                        wait(1000);
+                        //wait(1000);
                         progressBar.setProgress(25);
-                        wait(2000);
+                        //wait(2000);
                         progressBar.setProgress(50);
-                        wait(1500);
+                        //wait(1500);
                         progressBar.setProgress(80);
                         wait(DURATION);
                     } catch (InterruptedException e) {
@@ -42,4 +42,6 @@ public class SplashScreen extends AppCompatActivity {
         };
         mSplashThread.start();
     }
+
+
 }

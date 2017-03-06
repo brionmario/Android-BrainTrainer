@@ -34,7 +34,7 @@
         android:layout_marginTop="8dp"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintBottom_toTopOf="@+id/newgameBtn"
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginLeft="8dp"
@@ -44,12 +44,12 @@
 
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/newgameBtn"
         android:layout_width="200dp"
         android:layout_height="60dp"
         android:text="@string/newgame"
         android:layout_marginBottom="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
+        app:layout_constraintBottom_toTopOf="@+id/continueBtn"
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginLeft="8dp"
@@ -58,12 +58,12 @@
         android:background="@color/MediumVioletRed"/>
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/continueBtn"
         android:layout_width="200dp"
         android:layout_height="60dp"
         android:text="@string/conti"
         android:layout_marginBottom="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/button3"
+        app:layout_constraintBottom_toTopOf="@+id/aboutBtn"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginRight="8dp"
@@ -72,12 +72,12 @@
         android:background="@color/MediumVioletRed"/>
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/aboutBtn"
         android:layout_width="200dp"
         android:layout_height="60dp"
         android:text="@string/about"
         android:layout_marginBottom="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/button4"
+        app:layout_constraintBottom_toTopOf="@+id/exitBtn"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginRight="8dp"
@@ -86,7 +86,7 @@
         android:background="@color/MediumVioletRed"/>
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/exitBtn"
         android:layout_width="200dp"
         android:layout_height="60dp"
         android:text="@string/exit"
@@ -108,7 +108,7 @@
         android:layout_marginTop="8dp"
         app:layout_constraintTop_toBottomOf="@+id/lblMenu"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintBottom_toTopOf="@+id/newgameBtn"
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginLeft="8dp"
