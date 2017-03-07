@@ -18,6 +18,8 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
     //String to store the difficulty being passed
     String difficulty;
 
+    String [] test;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,7 +82,11 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
 
         //Generate a question
         QuestionGenerator questionGenerator = new QuestionGenerator(difficulty);
-        questionTV.setText(questionGenerator.generateQuestion());
+
+        test = questionGenerator.generateQuestion();
+
+        questionTV.setText(test[0]);
+        answerTV.setText(test[1]);
 
     }
 
