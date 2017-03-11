@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -15,7 +16,7 @@ import android.widget.Toast;
 
 public class GameScreen extends AppCompatActivity implements View.OnClickListener,CompoundButton.OnCheckedChangeListener {
 
-    TextView questionTV,answerTV,resultTV,hintsTV;
+    TextView questionTV,answerTV,resultTV,hintsTV,timeTV;
     //Declaring utility buttons
     Button deleteBtn,hashBtn,minusBtn;
     //Declaring number pad
@@ -35,10 +36,13 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
     public static final int MAX_QUESTIONS = 10;
 
     //question number counter
-    int numQuestions = 1;
+    int numQuestions = 0;
 
     //number of tries counter
     int tries = 1;
+
+    //counter boolean
+    boolean isCounterRunning = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +52,10 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
         Intent intent = getIntent();
 
         difficulty = intent.getStringExtra("Difficulty");
+
+        //initializing the textview to display the countdown timer
+        timeTV = (TextView) findViewById(R.id.timeTextView);
+        timeTV.setText("");
 
         //initializing the hints switch
         hintsSwitch = (Switch)  findViewById(R.id.hintSwitch);
@@ -109,12 +117,10 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
         zeroBtn = (Button) findViewById(R.id.zeroBtn);
         zeroBtn.setOnClickListener(this);
 
-        //Generate a question
-        QuestionGenerator questionGenerator = new QuestionGenerator(difficulty);
-
-        questionAnswer = questionGenerator.generateQuestion();
-
-        questionTV.setText(questionAnswer[0]);
+        //initiate the first question
+        makeQuestion();
+        //start the countdown timer
+        mCountDownTimer.start();
 
     }
 
@@ -255,20 +261,8 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
                 isHashBtnClicked = true;
             } else {
 
-                resultTV.setText("");
-                answerTV.setText("");
-                tries = 1;
-
-                //Generate a question
-                QuestionGenerator questionGenerator = new QuestionGenerator(difficulty);
-
-                questionAnswer = questionGenerator.generateQuestion();
-
-                questionTV.setText(questionAnswer[0]);
-
-                numQuestions++;
-                Toast.makeText(getBaseContext(), "Question Number " + numQuestions, Toast.LENGTH_SHORT).show();
-                isHashBtnClicked = false;
+                //move on to the next question
+                makeQuestion();
 
             }
         }else {
@@ -293,5 +287,40 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
+
+    //create a new question
+    public void makeQuestion(){
+        resultTV.setText("");
+        answerTV.setText("?");
+        tries = 1;
+
+        //Generate a question
+        QuestionGenerator questionGenerator = new QuestionGenerator(difficulty);
+
+        questionAnswer = questionGenerator.generateQuestion();
+
+        questionTV.setText(questionAnswer[0]);
+
+        numQuestions++;
+        Toast.makeText(getBaseContext(), "Question Number " + numQuestions, Toast.LENGTH_SHORT).show();
+        isHashBtnClicked = false;
+    }
+
+
+    //countdown timer
+    CountDownTimer mCountDownTimer = new CountDownTimer(10000, 1000) {
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+            timeTV.setText(millisUntilFinished / 1000 + " seconds");
+        }
+
+        @Override
+        public void onFinish() {
+            //move on to the next question
+            makeQuestion();
+            isCounterRunning = false;
+        }
+    };
 
 }

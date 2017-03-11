@@ -17,7 +17,7 @@
     <string name="lblAnswer">\?</string>
     <string name="lblEqual">&#160;=&#160;</string>
     <string name="lblHint">Hints are OFF</string>
-    <string name="lblTime">Time Left : </string>
+    <string name="lblTime">Time Left&#160;:&#160;</string>
     <string name="timerTextView">10 Seconds</string>
 
 
