@@ -100,7 +100,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
                 Intent intent = new Intent(getBaseContext(), GameScreen.class);
                 intent.putExtra("Difficulty", selectedDifficulty);
 
-                Toast.makeText(MainMenu.this, selectedDifficulty + " Difficulty selected",Toast.LENGTH_LONG).show();
+                Toast.makeText(MainMenu.this, selectedDifficulty + " Difficulty selected",Toast.LENGTH_SHORT).show();
 
                 //start the Game Screen activity
                 startActivity(intent);

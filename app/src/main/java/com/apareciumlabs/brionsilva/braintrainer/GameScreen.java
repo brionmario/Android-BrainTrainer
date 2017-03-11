@@ -36,7 +36,7 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
     public static final int MAX_QUESTIONS = 10;
 
     //question number counter
-    int numQuestions = 0;
+    static int numQuestions = 0;
 
     //number of tries counter
     int tries = 1;
@@ -46,6 +46,14 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        //initialize all the variables to deffault
+        numQuestions = 0;
+        tries = 1;
+        isHashBtnClicked = false;
+        isHintsChecked = false;
+        isCounterRunning = false;
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_screen);
 
@@ -266,7 +274,11 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
 
             }
         }else {
+
             Toast.makeText(getBaseContext(), " Number Up yako" + numQuestions, Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getBaseContext(),
+                    MainMenu.class);
+            startActivity(intent);
         }
     }
 
@@ -290,6 +302,9 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
 
     //create a new question
     public void makeQuestion(){
+
+        mCountDownTimer.start();
+
         resultTV.setText("");
         answerTV.setText("?");
         tries = 1;
@@ -308,7 +323,7 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
 
 
     //countdown timer
-    CountDownTimer mCountDownTimer = new CountDownTimer(10000, 1000) {
+    CountDownTimer mCountDownTimer = new CountDownTimer(11000, 1000) {
 
         @Override
         public void onTick(long millisUntilFinished) {
