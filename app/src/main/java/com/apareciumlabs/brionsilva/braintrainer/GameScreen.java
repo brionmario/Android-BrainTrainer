@@ -1,24 +1,31 @@
 package com.apareciumlabs.brionsilva.braintrainer;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class GameScreen extends AppCompatActivity implements View.OnClickListener {
+public class GameScreen extends AppCompatActivity implements View.OnClickListener,CompoundButton.OnCheckedChangeListener {
 
-    TextView questionTV,answerTV,resultTV;
+    TextView questionTV,answerTV,resultTV,hintsTV;
     //Declaring utility buttons
     Button deleteBtn,hashBtn,minusBtn;
     //Declaring number pad
     Button onebtn,twoBtn,threeBtn,fourBtn,fiveBtn,sixBtn,sevenBtn,eightBtn,nineBtn,zeroBtn;
+    Switch hintsSwitch;
 
     //String to store the difficulty being passed
     String difficulty;
 
-    String [] test;
+    String [] questionAnswer;
+
+    boolean isHashBtnClicked=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +36,10 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
 
         difficulty = intent.getStringExtra("Difficulty");
 
+        //initializing the hints switch
+        hintsSwitch = (Switch)  findViewById(R.id.hintSwitch);
+        hintsSwitch.setOnCheckedChangeListener(this);
+
         //initializing the question area
         questionTV = (TextView) findViewById(R.id.questionTextView);
         answerTV = (TextView) findViewById(R.id.answerTextView);
@@ -38,6 +49,11 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
 
         //initializing the result text view
         resultTV = (TextView) findViewById(R.id.resultTextView);
+        resultTV.setText("");
+
+        //initializing the hints text view
+        hintsTV = (TextView) findViewById(R.id.lblHint);
+        hintsTV.setText("Hints are OFF");
 
         //initialising the utility buttons
         deleteBtn = (Button) findViewById(R.id.delBtn);
@@ -83,10 +99,9 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
         //Generate a question
         QuestionGenerator questionGenerator = new QuestionGenerator(difficulty);
 
-        test = questionGenerator.generateQuestion();
+        questionAnswer = questionGenerator.generateQuestion();
 
-        questionTV.setText(test[0]);
-        answerTV.setText(test[1]);
+        questionTV.setText(questionAnswer[0]);
 
     }
 
@@ -143,14 +158,6 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
 
             //utility buttons
             case R.id.delBtn:{
-                answerTV.setText(null);
-                break;
-            }
-            case R.id.hashBtn:{
-                //check for the answer
-                break;
-            }
-            case R.id.minusBtn:{
                 //backspace action implementation
                 String answerStr = answerTV.getText().toString();
                 if (answerStr.length() >1 ) {
@@ -159,11 +166,61 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
                     answerTV.setText(answerStr);
                 }
                 else if (answerStr.length() <=1 ) {
-                    answerTV.setText("0");
+                    answerTV.setText("");
                 }
                 break;
             }
+            case R.id.hashBtn:{
 
+                    if(isHashBtnClicked==false) {
+                        //check for the answer
+                        String submittedAnswer = answerTV.getText().toString();
+                        if (submittedAnswer.equals(questionAnswer[1])) {
+                            resultTV.setText("CORRECT");
+                            resultTV.setTextColor(Color.GREEN);
+                        } else {
+                            resultTV.setText("WRONG");
+                            resultTV.setTextColor(Color.RED);
+                        }
+
+                        //button is pressed once
+                        isHashBtnClicked = true;
+                    }else {
+
+                        resultTV.setText("");
+                        answerTV.setText("");
+
+                        //Generate a question
+                        QuestionGenerator questionGenerator = new QuestionGenerator(difficulty);
+
+                        questionAnswer = questionGenerator.generateQuestion();
+
+                        questionTV.setText(questionAnswer[0]);
+
+
+                        isHashBtnClicked = false;
+
+                    }
+
+
+                break;
+            }
+            case R.id.minusBtn:{
+                answerTV.append("-");
+                break;
+            }
+
+        }
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        if(isChecked){
+            hintsTV.setText("Hints are ON");
+            Toast.makeText(getBaseContext(),"Hints have been turned ON",Toast.LENGTH_SHORT).show();
+        }else {
+            hintsTV.setText("Hints are OFF");
+            Toast.makeText(getBaseContext(),"Hints have been turned OFF",Toast.LENGTH_SHORT).show();
         }
     }
 }

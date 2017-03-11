@@ -27,18 +27,18 @@
             android:id="@+id/lblHint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="@string/lblHint"
             android:textColor="@color/Black"
+            android:layout_marginRight="5dp"
             tools:layout_editor_absoluteX="0dp"
             tools:layout_editor_absoluteY="0dp" />
 
-        <ToggleButton
-            android:id="@+id/toggleButton"
-            android:layout_width="88dp"
-            android:layout_height="48dp"
-            android:text="ToggleButton"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="0dp" />
+        <Switch
+            android:id="@+id/hintSwitch"
+            android:layout_width="50dp"
+            android:layout_height="10dp"
+            android:text="Switch" />
 
         <LinearLayout
             android:layout_width="fill_parent"

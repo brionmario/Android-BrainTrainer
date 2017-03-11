@@ -1,5 +1,6 @@
 package com.apareciumlabs.brionsilva.braintrainer;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
@@ -7,8 +8,14 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -17,6 +24,8 @@ import java.util.List;
 public class MainMenu extends AppCompatActivity implements View.OnClickListener{
 
     Button newgameBtn,continueBtn,aboutBtn,exitBtn;
+    Button okayBtn; //button for the popup
+    private PopupWindow popupWindow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +63,8 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
                 break;
             }
             case R.id.aboutBtn :{
-                //redirect to new game activity
+                //initiate the about popup window
+                aboutPopupWindow(v);
                 break;
 
             }
@@ -101,6 +111,35 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
         //Show the dialog
         alertDialogObject.show();
     }
+
+    //The method for the popup window
+    private void aboutPopupWindow(View v) {
+        try {
+            //get an instance of layoutinflater
+            LayoutInflater inflater = (LayoutInflater) MainMenu.this
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            //initiate the view
+            View layout = inflater.inflate(R.layout.popup,
+                    (ViewGroup) findViewById(R.id.popupView));
+
+            //initialize a size for the popup
+            popupWindow = new PopupWindow(layout, 1200, 1800, true);
+            // display the popup in the center
+            popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
+
+            okayBtn = (Button) layout.findViewById(R.id.okayBtn);
+            okayBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    popupWindow.dismiss();
+                }
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
 }
