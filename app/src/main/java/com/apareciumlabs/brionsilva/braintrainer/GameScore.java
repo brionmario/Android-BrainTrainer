@@ -1,8 +1,13 @@
 package com.apareciumlabs.brionsilva.braintrainer;
 
-/**
- * Created by brionsilva on 12/03/2017.
- */
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 
-public class GameScore {
+public class GameScore extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_game_score);
+    }
 }

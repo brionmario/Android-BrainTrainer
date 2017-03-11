@@ -18,7 +18,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainMenu" />
-        <activity android:name=".GameScreen"></activity>
+        <activity android:name=".GameScreen" />
+        <activity android:name=".GameScore"></activity>
     </application>
 
 </manifest>

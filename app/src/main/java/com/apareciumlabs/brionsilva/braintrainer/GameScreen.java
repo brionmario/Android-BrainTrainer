@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -53,6 +54,7 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
         isHashBtnClicked = false;
         isHintsChecked = false;
         isCounterRunning = false;
+
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_screen);
@@ -275,14 +277,18 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
             }
         }else {
 
-            Toast.makeText(getBaseContext(), " Number Up yako" + numQuestions, Toast.LENGTH_SHORT).show();
+            /*when the maximum questions have been answered
+            finish the current activity and move to the score */
             Intent intent = new Intent(getBaseContext(),
-                    MainMenu.class);
+                    GameScore.class);
+            finish();
             startActivity(intent);
+
         }
     }
 
     //Alert Dialog boy reusable  method
+
     public void alertBox(String Message , String Button){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(true);
@@ -300,7 +306,9 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
         alertDialog.show();
     }
 
-    //create a new question
+    /**
+     * Creates a new question resetting the timer,answer textview, result text view.
+     */
     public void makeQuestion(){
 
         mCountDownTimer.start();
@@ -322,7 +330,11 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
     }
 
 
-    //countdown timer
+    /**
+     * Contains the actions performed when the timer is running and when it's finished.
+     * @param First parameter is for the start time
+     * @param Second parameter is for the interval
+     */
     CountDownTimer mCountDownTimer = new CountDownTimer(11000, 1000) {
 
         @Override
@@ -332,10 +344,39 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
 
         @Override
         public void onFinish() {
-            //move on to the next question
-            makeQuestion();
-            isCounterRunning = false;
+
+            //check if the maximum number of questions have been reached
+            if(numQuestions==MAX_QUESTIONS){
+
+                //finish the current activity and move to the score
+                Intent intent = new Intent(getBaseContext(),
+                        GameScore.class);
+                finish();
+                mCountDownTimer.cancel();
+                startActivity(intent);
+
+
+            }else {
+                //move on to the next question
+                makeQuestion();
+                isCounterRunning = false;
+            }
+
         }
     };
+
+    /**
+     * Overrides the default android back button action
+     * Stops the timer , Clears the current stack and goes back to the main menu.
+     */
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        mCountDownTimer.cancel();
+        Intent intent = new Intent(this, MainMenu.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish(); // finish the current activity
+    }
 
 }
