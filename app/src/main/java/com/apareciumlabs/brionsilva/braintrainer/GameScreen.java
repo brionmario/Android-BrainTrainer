@@ -1,5 +1,7 @@
 package com.apareciumlabs.brionsilva.braintrainer;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
@@ -18,14 +20,25 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
     Button deleteBtn,hashBtn,minusBtn;
     //Declaring number pad
     Button onebtn,twoBtn,threeBtn,fourBtn,fiveBtn,sixBtn,sevenBtn,eightBtn,nineBtn,zeroBtn;
+    //declaring the switch for the hints option
     Switch hintsSwitch;
 
     //String to store the difficulty being passed
     String difficulty;
-
+    //String array to show the question and answer pair to be displayed on the text views
     String [] questionAnswer;
 
     boolean isHashBtnClicked=false;
+
+    boolean isHintsChecked = false;
+
+    public static final int MAX_QUESTIONS = 10;
+
+    //question number counter
+    int numQuestions = 1;
+
+    //number of tries counter
+    int tries = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -171,38 +184,8 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
                 break;
             }
             case R.id.hashBtn:{
-
-                    if(isHashBtnClicked==false) {
-                        //check for the answer
-                        String submittedAnswer = answerTV.getText().toString();
-                        if (submittedAnswer.equals(questionAnswer[1])) {
-                            resultTV.setText("CORRECT");
-                            resultTV.setTextColor(Color.GREEN);
-                        } else {
-                            resultTV.setText("WRONG");
-                            resultTV.setTextColor(Color.RED);
-                        }
-
-                        //button is pressed once
-                        isHashBtnClicked = true;
-                    }else {
-
-                        resultTV.setText("");
-                        answerTV.setText("");
-
-                        //Generate a question
-                        QuestionGenerator questionGenerator = new QuestionGenerator(difficulty);
-
-                        questionAnswer = questionGenerator.generateQuestion();
-
-                        questionTV.setText(questionAnswer[0]);
-
-
-                        isHashBtnClicked = false;
-
-                    }
-
-
+                //call the validate method
+                validate();
                 break;
             }
             case R.id.minusBtn:{
@@ -217,10 +200,98 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         if(isChecked){
             hintsTV.setText("Hints are ON");
+            isHintsChecked = true;
             Toast.makeText(getBaseContext(),"Hints have been turned ON",Toast.LENGTH_SHORT).show();
         }else {
             hintsTV.setText("Hints are OFF");
+            isHintsChecked = false;
             Toast.makeText(getBaseContext(),"Hints have been turned OFF",Toast.LENGTH_SHORT).show();
         }
     }
+
+    //Validating the answer
+    public void validate(){
+
+        if(numQuestions < MAX_QUESTIONS) {
+
+            if (isHashBtnClicked == false) {
+                //check for the answer
+                String submittedAnswer = answerTV.getText().toString();
+
+                if (submittedAnswer.equals(questionAnswer[1])) {
+                    resultTV.setText("CORRECT");
+                    resultTV.setTextColor(Color.GREEN);
+                } else {
+                    //checking if the hints option is on
+                    if(isHintsChecked == false ) {
+
+                        resultTV.setText("WRONG");
+                        resultTV.setTextColor(Color.RED);
+
+                    }else {
+
+                        if(tries < 5) {
+                            if (Integer.parseInt(submittedAnswer) > Integer.parseInt(questionAnswer[1])) {
+
+                                alertBox("Less", "Okay");
+
+                            } else if (Integer.parseInt(submittedAnswer) < Integer.parseInt(questionAnswer[1])) {
+
+                                alertBox("Greater", "Okay");
+
+                            }
+                            Toast.makeText(getBaseContext() , "Attempt number " + tries , Toast.LENGTH_SHORT).show();
+                            if(tries==4) {
+                                isHashBtnClicked=true;
+                                return;
+                            }
+                            tries++;
+                            return;
+                        }
+                    }
+                }
+
+                //button is pressed once
+                isHashBtnClicked = true;
+            } else {
+
+                resultTV.setText("");
+                answerTV.setText("");
+                tries = 1;
+
+                //Generate a question
+                QuestionGenerator questionGenerator = new QuestionGenerator(difficulty);
+
+                questionAnswer = questionGenerator.generateQuestion();
+
+                questionTV.setText(questionAnswer[0]);
+
+                numQuestions++;
+                Toast.makeText(getBaseContext(), "Question Number " + numQuestions, Toast.LENGTH_SHORT).show();
+                isHashBtnClicked = false;
+
+            }
+        }else {
+            Toast.makeText(getBaseContext(), " Number Up yako" + numQuestions, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    //Alert Dialog boy reusable  method
+    public void alertBox(String Message , String Button){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(true);
+        builder.setMessage(Message);
+
+        builder.setPositiveButton(
+                Button,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
 }

@@ -123,7 +123,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
                     (ViewGroup) findViewById(R.id.popupView));
 
             //initialize a size for the popup
-            popupWindow = new PopupWindow(layout, 1200, 1800, true);
+            popupWindow = new PopupWindow(layout, 1200, 1400, true);
             // display the popup in the center
             popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
 
