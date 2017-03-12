@@ -25,4 +25,19 @@
     <string name="rules">Rules of the Game</string>
     <string name="rulesList">As soon as the user enters the # sign following the answer, the message CORRECT! (in green colour) or the message WRONG! (in red colour) appears on the screen, depending on whether the answer given is correct or incorrect respectively, as shown in Figure 2. Pressing the # button again, presents the user with the next arithmetic expression, until the user completes the full cycle of guessing 10 arithmetic expressions.</string>
     <string name="okay">Okay</string>
+
+    <!--Score page-->
+    <string name="score">SCORE</string>
+    <string name="scoreHelper">Check your score here</string>
+    <string name="question1">Question 01</string>
+    <string name="question2">Question 02</string>
+    <string name="question3">Question 03</string>
+    <string name="question4">Question 04</string>
+    <string name="question5">Question 05</string>
+    <string name="question6">Question 06</string>
+    <string name="question7">Question 07</string>
+    <string name="question8">Question 08</string>
+    <string name="question9">Question 09</string>
+    <string name="question10">Question 10</string>
+    <string name="points">Points</string>
 </resources>

@@ -5,14 +5,73 @@
     android:layout_width="match_parent"
     android:background="@color/white"
     android:layout_height="match_parent"
-    tools:context="com.apareciumlabs.brionsilva.braintrainer.GameScore">
+    tools:context="com.apareciumlabs.brionsilva.braintrainer.ScoreScreen">
 
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/lblScore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="176dp"
-        tools:layout_editor_absoluteY="42dp" />
+        android:text="@string/score"
+        android:textColor="@color/Black"
+        android:textSize="24sp"
+        android:textAlignment="center"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/lblScoreHelp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/lblScoreHelp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/scoreHelper"
+        android:textColor="@color/LightGrey"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/scoreListView"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="65dp" />
+
+    <ListView
+        android:id="@+id/scoreListView"
+        android:layout_width="fill_parent"
+        android:layout_height="400dp"
+        android:padding="10dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginBottom="46dp"
+        app:layout_constraintBottom_toTopOf="@+id/button">
+
+    </ListView>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="40dp"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.498" />
 </android.support.constraint.ConstraintLayout>

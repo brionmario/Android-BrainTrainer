@@ -7,13 +7,16 @@ import android.graphics.Color;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameScreen extends AppCompatActivity implements View.OnClickListener,CompoundButton.OnCheckedChangeListener {
 
@@ -34,7 +37,9 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
 
     boolean isHintsChecked = false;
 
-    public static final int MAX_QUESTIONS = 10;
+    public static final int MAX_QUESTIONS = 10; //constant holds the maximum question count
+
+    public static final int COUNTER_START = 10000; //constant to hold the counter start time i.e = 10 seconds
 
     //question number counter
     static int numQuestions = 0;
@@ -42,13 +47,19 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
     //number of tries counter
     int tries = 1;
 
+    //variable to store the remaining time of the timer
+    long secondsLeft;
+
     //counter boolean
     boolean isCounterRunning = false;
+
+    //List to store the scores
+    ArrayList<String> scores;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        //initialize all the variables to deffault
+        //initialize all the variables to default
         numQuestions = 0;
         tries = 1;
         isHashBtnClicked = false;
@@ -126,6 +137,9 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
 
         zeroBtn = (Button) findViewById(R.id.zeroBtn);
         zeroBtn.setOnClickListener(this);
+
+        //initialize the score list
+        scores = new ArrayList<>();
 
         //initiate the first question
         makeQuestion();
@@ -228,63 +242,84 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
     //Validating the answer
     public void validate(){
 
-        if(numQuestions < MAX_QUESTIONS) {
+        if(numQuestions < MAX_QUESTIONS ) {
 
             if (isHashBtnClicked == false) {
-                //check for the answer
-                String submittedAnswer = answerTV.getText().toString();
 
-                if (submittedAnswer.equals(questionAnswer[1])) {
-                    resultTV.setText("CORRECT");
-                    resultTV.setTextColor(Color.GREEN);
-                } else {
-                    //checking if the hints option is on
-                    if(isHintsChecked == false ) {
+                //call the check answer method
+                checkAnswer();
 
-                        resultTV.setText("WRONG");
-                        resultTV.setTextColor(Color.RED);
-
-                    }else {
-
-                        if(tries < 5) {
-                            if (Integer.parseInt(submittedAnswer) > Integer.parseInt(questionAnswer[1])) {
-
-                                alertBox("Less", "Okay");
-
-                            } else if (Integer.parseInt(submittedAnswer) < Integer.parseInt(questionAnswer[1])) {
-
-                                alertBox("Greater", "Okay");
-
-                            }
-                            Toast.makeText(getBaseContext() , "Attempt number " + tries , Toast.LENGTH_SHORT).show();
-                            if(tries==4) {
-                                isHashBtnClicked=true;
-                                return;
-                            }
-                            tries++;
-                            return;
-                        }
-                    }
-                }
-
-                //button is pressed once
-                isHashBtnClicked = true;
             } else {
 
                 //move on to the next question
                 makeQuestion();
 
             }
+        }else if(numQuestions == MAX_QUESTIONS ){
+
+            //check the answer
+            checkAnswer();
+
         }else {
 
             /*when the maximum questions have been answered
             finish the current activity and move to the score */
             Intent intent = new Intent(getBaseContext(),
-                    GameScore.class);
+                    ScoreScreen.class);
+            intent.putStringArrayListExtra("scorelist", scores);
             finish();
             startActivity(intent);
 
         }
+    }
+
+
+    public void checkAnswer(){
+        //check for the answer
+        String submittedAnswer = answerTV.getText().toString();
+
+        if (submittedAnswer.equals(questionAnswer[1])) {
+            resultTV.setText("CORRECT");
+            resultTV.setTextColor(Color.GREEN);
+
+            //save the score
+            scores.add("Question " + numQuestions + "\t - \t" + String.valueOf(calculateScore(secondsLeft)));
+
+        } else {
+            //checking if the hints option is on
+            if(isHintsChecked == false ) {
+
+                resultTV.setText("WRONG");
+                resultTV.setTextColor(Color.RED);
+
+                //save the score
+                scores.add("Question " + numQuestions + "\t - \t" + "0");
+
+            }else {
+
+                if(tries < 5) {
+                    if (Integer.parseInt(submittedAnswer) > Integer.parseInt(questionAnswer[1])) {
+
+                        alertBox("Less", "Okay");
+
+                    } else if (Integer.parseInt(submittedAnswer) < Integer.parseInt(questionAnswer[1])) {
+
+                        alertBox("Greater", "Okay");
+
+                    }
+                    Toast.makeText(getBaseContext() , "Attempt number " + tries , Toast.LENGTH_SHORT).show();
+                    if(tries==4) {
+                        isHashBtnClicked=true;
+                        return;
+                    }
+                    tries++;
+                    return;
+                }
+            }
+        }
+
+        //button is pressed once
+        isHashBtnClicked = true;
     }
 
     //Alert Dialog boy reusable  method
@@ -335,32 +370,41 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
      * @param First parameter is for the start time
      * @param Second parameter is for the interval
      */
-    CountDownTimer mCountDownTimer = new CountDownTimer(11000, 1000) {
+    CountDownTimer mCountDownTimer = new CountDownTimer(COUNTER_START, 1000) {
 
         @Override
         public void onTick(long millisUntilFinished) {
+            //asigning the remaining time to a variable
+            secondsLeft = millisUntilFinished / 1000;
             timeTV.setText(millisUntilFinished / 1000 + " seconds");
         }
 
         @Override
         public void onFinish() {
 
+
+            //save the score
+            scores.add("Question " + numQuestions + "\t - \t" + "0");
+
             //check if the maximum number of questions have been reached
-            if(numQuestions==MAX_QUESTIONS){
+            if(numQuestions == MAX_QUESTIONS){
 
                 //finish the current activity and move to the score
                 Intent intent = new Intent(getBaseContext(),
-                        GameScore.class);
-                finish();
+                        ScoreScreen.class);
+                intent.putStringArrayListExtra("scorelist", scores);
                 mCountDownTimer.cancel();
+                finish();
                 startActivity(intent);
 
-
             }else {
+
                 //move on to the next question
                 makeQuestion();
                 isCounterRunning = false;
             }
+
+
 
         }
     };
@@ -377,6 +421,12 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         finish(); // finish the current activity
+    }
+
+    public int calculateScore(long time_remaining){
+
+        int score = (int) (100 / (10 - time_remaining));
+        return score;
     }
 
 }

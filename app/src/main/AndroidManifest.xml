@@ -19,7 +19,7 @@
         </activity>
         <activity android:name=".MainMenu" />
         <activity android:name=".GameScreen" />
-        <activity android:name=".GameScore"></activity>
+        <activity android:name=".ScoreScreen"></activity>
     </application>
 
 </manifest>
