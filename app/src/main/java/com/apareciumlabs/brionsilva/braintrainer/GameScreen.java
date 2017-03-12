@@ -156,7 +156,7 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
             isHintsChecked = intent.getBooleanExtra("Hints",true);
             hintsSwitch.setChecked(isHintsChecked);
             difficulty = intent.getStringExtra("Difficulty");
-            Toast.makeText(getBaseContext(), difficulty + " Difficulty selected",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getBaseContext(), "Game Resumed",Toast.LENGTH_SHORT).show();
             questionTV.setText(intent.getStringExtra("Question"));
             answerTV.setText(intent.getStringExtra("Answer"));
             resultTV.setText(intent.getStringExtra("Result"));

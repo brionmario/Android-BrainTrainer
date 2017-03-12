@@ -22,8 +22,19 @@
 
 
     <!--About popup strings-->
-    <string name="rules">Rules of the Game</string>
-    <string name="rulesList">As soon as the user enters the # sign following the answer, the mesAs soon as the user enters the # sign following the answer, the message CORRECT!As soon as the user enters the # sign following the answer, the message CORRECT!As soon as the user enters the # sign following the answer, the message CORRECT!As soon as the user enters the # sign following the answer, the message CORRECT!As soon as the user enters the # sign following the answer, the message CORRECT!sage CORRECT! (in green colour) or the message WRONG! (in red colour) appears on the screen, depending on whether the answer given is correct or incorrect respectively, as shown in Figure 2. Pressing the # button again, presents the user with the next arithmetic expression, until the user completes the full cycle of guessing 10 arithmetic expressions.</string>
+    <string name="rules"><u>Rules of the Game</u></string>
+    <string name="rulesList">
+        1. You have to answer a question with in 10 seconds and press # to commit the answer.
+        \n\n 2. If your answer is wrong and you have enabled hints. You will get 4 attempts until the time runs out.
+        \n\n 3. You will not get more time by turning on the Hints.
+        \n\n 4. If you do not submit any answer the page will take you to the next question and zero points will be given.</string>
+
+    <string name="scoring"><u>Scoring Mechanism</u></string>
+    <string name="scoreList">
+        1. If you guess wrong, 0 points will be given.
+        \n\n 2. (a)	100 / (10−time remaining ) marks for each correct guess. time remaining is the value of the countdown timer when the user pressed the # button to submit the answer.
+        \n\n 3. 0 Points if the time runs out.
+    </string>
     <string name="okay">Okay</string>
 
     <!--Score page-->

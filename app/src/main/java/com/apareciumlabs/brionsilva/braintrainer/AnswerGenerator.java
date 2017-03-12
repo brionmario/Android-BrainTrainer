@@ -5,4 +5,11 @@ package com.apareciumlabs.brionsilva.braintrainer;
  */
 
 public class AnswerGenerator {
+
+    private String difficulty;
+
+    public AnswerGenerator(String difficulty){
+        this.difficulty = difficulty;
+    }
+
 }

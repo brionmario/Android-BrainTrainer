@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.widget.ProgressBar;
 
 public class SplashScreen extends AppCompatActivity {
-    private final int DURATION =1000;
+    private final int DURATION =3000;
     private Thread mSplashThread;
     private ProgressBar progressBar = null;
 
@@ -21,11 +21,11 @@ public class SplashScreen extends AppCompatActivity {
             public void run() {
                 synchronized (this) {
                     try {
-                        //wait(1000);
+                        wait(1000);
                         progressBar.setProgress(25);
-                        //wait(2000);
+                        wait(2000);
                         progressBar.setProgress(50);
-                        //wait(1500);
+                        wait(1500);
                         progressBar.setProgress(80);
                         wait(DURATION);
                     } catch (InterruptedException e) {

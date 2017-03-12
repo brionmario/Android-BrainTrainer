@@ -33,12 +33,26 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/rules"
-                android:textColor="@color/Black"/>
+                android:textColor="@color/Black" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/rulesList"
+                android:textAlignment="center"
+                android:padding="20sp"
+                android:textColor="@color/Black"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/scoring"
+                android:textColor="@color/Black"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/scoreList"
                 android:textAlignment="center"
                 android:padding="20sp"
                 android:textColor="@color/Black"/>
@@ -50,7 +64,8 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:drawablePadding="3sp"
-                android:text="@string/okay" />
+                android:text="@string/okay"
+                android:background="@color/MediumVioletRed"/>
 
 
         </LinearLayout>
