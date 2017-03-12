@@ -64,6 +64,8 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
     //boolean to store if the continue button clicked
     Boolean isContinueClicked;
 
+    String answerString;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -140,9 +142,6 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
         scores = new ArrayList<>();
 
 
-
-
-
         if(isContinueClicked){
             //Toast.makeText(getBaseContext(),"Continue clicked",Toast.LENGTH_SHORT).show();
 
@@ -155,18 +154,30 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
             numQuestions = intent.getIntExtra("QuestionNumber",1); */
 
             isHintsChecked = intent.getBooleanExtra("Hints",true);
+            hintsSwitch.setChecked(isHintsChecked);
             difficulty = intent.getStringExtra("Difficulty");
             Toast.makeText(getBaseContext(), difficulty + " Difficulty selected",Toast.LENGTH_SHORT).show();
             questionTV.setText(intent.getStringExtra("Question"));
             answerTV.setText(intent.getStringExtra("Answer"));
             resultTV.setText(intent.getStringExtra("Result"));
             numQuestions = intent.getIntExtra("QuestionNumber" , 0);
+            //COUNTER_START = (int) intent.getLongExtra("TimeLeft" , 0);
+            //Toast.makeText(getBaseContext() , String.valueOf(COUNTER_START), Toast.LENGTH_SHORT).show();
+
+
+            if(isHintsChecked){
+                hintsTV.setText("Hints are ON");
+
+            }else {
+                hintsTV.setText("Hints are OFF");
+            }
 
             EvaluateEngine evaluateEngine = new EvaluateEngine();
             Double answer = evaluateEngine.evaluate(questionTV.getText().toString());
-            String answerString = String.valueOf((int) Math.round(answer));
+            answerString = String.valueOf((int) Math.round(answer));
 
-            Toast.makeText(getBaseContext(), "Q"  + numQuestions + " Ans" + answerString,Toast.LENGTH_SHORT).show();
+
+            //Toast.makeText(getBaseContext(), "Q"  + numQuestions + " Ans" + answerString,Toast.LENGTH_SHORT).show();
 
 
         }else {
@@ -270,6 +281,7 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
                 if(answerTV.getText().toString().equals("")){
                     alertBox("Please input a valid answer","OKAY");
                 } else{
+
                     //call the validate method
                     validate();
                 }
@@ -332,10 +344,19 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
 
 
     public void checkAnswer(){
+
+        String correctAnswer;
+
+
+        if(isContinueClicked){
+            correctAnswer = answerString;
+        }else{
+            correctAnswer = questionAnswer[1];
+        }
         //check for the answer
         String submittedAnswer = answerTV.getText().toString();
 
-        if (submittedAnswer.equals(questionAnswer[1])) {
+        if (submittedAnswer.equals(correctAnswer)) {
             resultTV.setText("CORRECT");
             resultTV.setTextColor(Color.GREEN);
 
@@ -356,12 +377,12 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
 
                 if(tries < 5) {
 
-                    if (Integer.parseInt(submittedAnswer) > Integer.parseInt(questionAnswer[1])) {
+                    if (Integer.parseInt(submittedAnswer) > Integer.parseInt(correctAnswer)) {
 
                         resultTV.setText("LESS");
                         resultTV.setTextColor(Color.BLUE);
 
-                    } else if (Integer.parseInt(submittedAnswer) < Integer.parseInt(questionAnswer[1])) {
+                    } else if (Integer.parseInt(submittedAnswer) < Integer.parseInt(correctAnswer)) {
 
                         resultTV.setText("GREATER");
                         resultTV.setTextColor(Color.BLUE);
@@ -480,8 +501,9 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
 
         Intent intent = new Intent(this, MainMenu.class);
         //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
         finish(); // finish the current activity
+        startActivity(intent);
+
     }
 
     public int calculateScore(long time_remaining){
@@ -496,7 +518,7 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
         editor.putString("Difficulty" , difficulty);
         editor.putBoolean("Hints" , isHintsChecked);
         editor.putLong("TimeLeft" , secondsLeft);
-        editor.putString("Question" , questionAnswer[0]);
+        editor.putString("Question" , questionTV.getText().toString());
         editor.putString("Answer" , answerTV.getText().toString());
         editor.putString("Result" , resultTV.getText().toString());
         editor.putInt("QuestionNumber" , numQuestions);

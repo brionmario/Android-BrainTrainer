@@ -89,9 +89,9 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
             }
 
             case R.id.exitBtn :{
-                /*Terminates the application. Added the line android:excludeFromRecents="true"
-                in the manifest to terminate the app from the background as well*/
-                finish();
+
+                gameExitDialog();
+
                 break;
             }
         }
@@ -157,6 +157,37 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    //Game Exit Dialog
+    public void gameExitDialog()
+    {
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(this , R.style.BrionDialogTheme);
+        builder1.setMessage("Would you like to save the game data?");
+        builder1.setCancelable(true);
+
+        builder1.setPositiveButton(
+                "Yes",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        finish();
+                    }
+                });
+
+        builder1.setNegativeButton(
+                "No",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                        /*Terminates the application. Added the line android:excludeFromRecents="true"
+                in the manifest to terminate the app from the background as well*/
+                        finish();
+
+                    }
+                });
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
     }
 
 

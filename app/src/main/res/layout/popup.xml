@@ -2,41 +2,57 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/popupView"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:background="@color/LightGrey"
+    android:layout_height="300dp"
+    android:background="@drawable/border"
     android:padding="10px"
     android:orientation="vertical"
-    android:gravity="center">
+    android:gravity="center"
+>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/about"
-        android:textSize="24sp"
-        android:textAlignment="center"
-        android:textColor="@color/Black" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/rules"
-        android:textColor="@color/Black"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/rulesList"
-        android:textAlignment="center"
-        android:padding="20sp"
-        android:textColor="@color/Black"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:orientation="vertical"
+            android:gravity="center">
 
 
-    <Button
-        android:id="@+id/okayBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:drawablePadding="3sp"
-        android:text="@string/okay" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/about"
+                android:textSize="24sp"
+                android:textAlignment="center"
+                android:textColor="@color/Black"
+                android:layout_marginBottom="20dp"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/rules"
+                android:textColor="@color/Black"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/rulesList"
+                android:textAlignment="center"
+                android:padding="20sp"
+                android:textColor="@color/Black"/>
+
+
+            <Button
+                android:id="@+id/okayBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:drawablePadding="3sp"
+                android:text="@string/okay" />
+
+
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

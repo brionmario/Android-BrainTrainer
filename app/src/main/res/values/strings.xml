@@ -23,7 +23,7 @@
 
     <!--About popup strings-->
     <string name="rules">Rules of the Game</string>
-    <string name="rulesList">As soon as the user enters the # sign following the answer, the message CORRECT! (in green colour) or the message WRONG! (in red colour) appears on the screen, depending on whether the answer given is correct or incorrect respectively, as shown in Figure 2. Pressing the # button again, presents the user with the next arithmetic expression, until the user completes the full cycle of guessing 10 arithmetic expressions.</string>
+    <string name="rulesList">As soon as the user enters the # sign following the answer, the mesAs soon as the user enters the # sign following the answer, the message CORRECT!As soon as the user enters the # sign following the answer, the message CORRECT!As soon as the user enters the # sign following the answer, the message CORRECT!As soon as the user enters the # sign following the answer, the message CORRECT!As soon as the user enters the # sign following the answer, the message CORRECT!sage CORRECT! (in green colour) or the message WRONG! (in red colour) appears on the screen, depending on whether the answer given is correct or incorrect respectively, as shown in Figure 2. Pressing the # button again, presents the user with the next arithmetic expression, until the user completes the full cycle of guessing 10 arithmetic expressions.</string>
     <string name="okay">Okay</string>
 
     <!--Score page-->
