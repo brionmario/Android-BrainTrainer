@@ -430,8 +430,8 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
      * An alertbox method with a single button and a single string message. This can be reused
      * simply by passing the following params
      *
-     * @param Message
-     * @param Button
+     * @param Message The message to be displayed inside the alert box
+     * @param Button Preferred name of the button is passed via a String parameter
      */
     public void alertBox(String Message , String Button){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -535,12 +535,26 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
 
     }
 
+    /**
+     * This function calculates the score for each question by taking the time remaining in to
+     * consideration
+     * @param time_remaining Get the remaining time of the timer
+     * @return Returns the score as an integer
+     */
     public int calculateScore(long time_remaining){
 
         int score = (int) (100 / (10 - time_remaining));
         return score;
     }
 
+    /**
+     *
+     * This method uses the SharedPreferences object created in the oncreate() method and it
+     * puts all the necessary data in to the editor  and finally commits the changes.
+     * This method is called by the onBackPressed() method when the back
+     * button of the android phone is pressed.
+     *
+     */
     public void saveGameData(){
 
         //Data to be passed
