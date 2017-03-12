@@ -19,6 +19,15 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Set;
 
+/**
+ * This activity class links with the main screen layout and this displays the questions, answers,
+ * results, hints etc.
+ *
+ * @author  Brion Mario
+ * @version 1.0
+ * @since   2017-03-08
+ */
+
 public class GameScreen extends AppCompatActivity implements View.OnClickListener,CompoundButton.OnCheckedChangeListener {
 
     TextView questionTV,answerTV,resultTV,hintsTV,timeTV;
@@ -295,6 +304,11 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
         }
     }
 
+    /**
+     * overidden onCheckedChanged method for the switch.
+     * @param buttonView The switch instance
+     * @param isChecked Boolean to check if the switch is on or off
+     */
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         if(isChecked){
@@ -308,7 +322,9 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
         }
     }
 
-    //Validating the answer
+    /**
+     * Checks and validates the answer considering the maximum number of questions etc.
+     */
     public void validate(){
 
         if(numQuestions < MAX_QUESTIONS ) {
@@ -343,6 +359,13 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
     }
 
 
+    /**
+     *
+     * validate method call this method to check if the answer supplied by the user is correct.
+     * and calls the calculateScore() method and stores the score and the coreesponding
+     * quesion number in an arraylist to be used in the score view intent.
+     *
+     */
     public void checkAnswer(){
 
         String correctAnswer;
@@ -403,7 +426,13 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
         isHashBtnClicked = true;
     }
 
-    //Alert Dialog boy reusable  method
+    /**
+     * An alertbox method with a single button and a single string message. This can be reused
+     * simply by passing the following params
+     *
+     * @param Message
+     * @param Button
+     */
     public void alertBox(String Message , String Button){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(true);

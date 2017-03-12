@@ -5,6 +5,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ProgressBar;
 
+/**
+ * This Android application was designed and developed to be used as a basic Brain training game.
+ *
+ * @author  Brion Mario
+ * @version 1.0
+ * @since   2017-03-05
+ */
+
 public class SplashScreen extends AppCompatActivity {
     private final int DURATION =3000;
     private Thread mSplashThread;

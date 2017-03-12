@@ -23,6 +23,10 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Created by brionsilva on 07/03/2017.
+ */
+
 public class MainMenu extends AppCompatActivity implements View.OnClickListener{
 
     Button newgameBtn,continueBtn,aboutBtn,exitBtn;

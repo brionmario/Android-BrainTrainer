@@ -154,9 +154,12 @@ public class QuestionGenerator {
 
         questionString = termsList.get(0) + " " + operatorList.get(0) + " " + termsList.get(1);
 
-        EvaluateEngine evaluateEngine = new EvaluateEngine();
+       /* EvaluateEngine evaluateEngine = new EvaluateEngine();
         Double answer = evaluateEngine.evaluate(questionString);
-        answerString = String.valueOf((int) Math.round(answer));
+        answerString = String.valueOf((int) Math.round(answer));*/
+
+        AnswerGenerator answerGenerator = new AnswerGenerator(difficulty);
+        answerString = String.valueOf(answerGenerator.generateAnswer(termsList,operatorList,2));
 
         return new String[] {questionString,answerString};
     }
@@ -172,9 +175,12 @@ public class QuestionGenerator {
             case 0:{
                 questionString = termsList.get(0) + " " + operatorList.get(0) + " " + termsList.get(1);
 
-                EvaluateEngine evaluateEngine = new EvaluateEngine();
+                /*EvaluateEngine evaluateEngine = new EvaluateEngine();
                 Double answer = evaluateEngine.evaluate(questionString);
-                answerString = String.valueOf((int) Math.round(answer));
+                answerString = String.valueOf((int) Math.round(answer));*/
+
+                AnswerGenerator answerGenerator = new AnswerGenerator(difficulty);
+                answerString = String.valueOf(answerGenerator.generateAnswer(termsList,operatorList,2));
 
                 return new String[] {questionString,answerString};
             }
@@ -183,9 +189,12 @@ public class QuestionGenerator {
                 questionString = termsList.get(0) + " " + operatorList.get(0) + " " + termsList.get(1)
                         + " " + operatorList.get(1) + " " + termsList.get(2);
 
-                EvaluateEngine evaluateEngine = new EvaluateEngine();
+                /*EvaluateEngine evaluateEngine = new EvaluateEngine();
                 Double answer = evaluateEngine.evaluate(questionString);
-                answerString = String.valueOf((int) Math.round(answer));
+                answerString = String.valueOf((int) Math.round(answer));*/
+
+                AnswerGenerator answerGenerator = new AnswerGenerator(difficulty);
+                answerString = String.valueOf(answerGenerator.generateAnswer(termsList,operatorList,3));
 
                 return new String[] {questionString,answerString};
 
@@ -206,9 +215,12 @@ public class QuestionGenerator {
             case 0:{
                 questionString = termsList.get(0) + " " + operatorList.get(0) + " " + termsList.get(1);
 
-                EvaluateEngine evaluateEngine = new EvaluateEngine();
+                /*EvaluateEngine evaluateEngine = new EvaluateEngine();
                 Double answer = evaluateEngine.evaluate(questionString);
-                answerString = String.valueOf((int) Math.round(answer));
+                answerString = String.valueOf((int) Math.round(answer));*/
+
+                AnswerGenerator answerGenerator = new AnswerGenerator(difficulty);
+                answerString = String.valueOf(answerGenerator.generateAnswer(termsList,operatorList,2));
 
                 return new String[] {questionString,answerString};
             }
@@ -217,9 +229,12 @@ public class QuestionGenerator {
                 questionString = termsList.get(0) + " " + operatorList.get(0) + " " + termsList.get(1)
                         + " " + operatorList.get(1) + " " + termsList.get(2);
 
-                EvaluateEngine evaluateEngine = new EvaluateEngine();
+                /*EvaluateEngine evaluateEngine = new EvaluateEngine();
                 Double answer = evaluateEngine.evaluate(questionString);
-                answerString = String.valueOf((int) Math.round(answer));
+                answerString = String.valueOf((int) Math.round(answer));*/
+
+                AnswerGenerator answerGenerator = new AnswerGenerator(difficulty);
+                answerString = String.valueOf(answerGenerator.generateAnswer(termsList,operatorList,3));
 
                 return new String[] {questionString,answerString};
 
@@ -229,9 +244,12 @@ public class QuestionGenerator {
                 questionString = termsList.get(0) + " " + operatorList.get(0) + " " + termsList.get(1)
                         + " " + operatorList.get(1) + " " + termsList.get(2)+ " " + operatorList.get(2) + " " + termsList.get(3);
 
-                EvaluateEngine evaluateEngine = new EvaluateEngine();
+                /*EvaluateEngine evaluateEngine = new EvaluateEngine();
                 Double answer = evaluateEngine.evaluate(questionString);
-                answerString = String.valueOf((int) Math.round(answer));
+                answerString = String.valueOf((int) Math.round(answer));*/
+
+                AnswerGenerator answerGenerator = new AnswerGenerator(difficulty);
+                answerString = String.valueOf(answerGenerator.generateAnswer(termsList,operatorList,4));
 
                 return new String[] {questionString,answerString};
 
@@ -253,9 +271,12 @@ public class QuestionGenerator {
                 questionString = termsList.get(0) + " " + operatorList.get(0) + " " + termsList.get(1)
                         + " " + operatorList.get(1) + " " + termsList.get(2)+ " " + operatorList.get(2) + " " + termsList.get(3);
 
-                EvaluateEngine evaluateEngine = new EvaluateEngine();
+                /*EvaluateEngine evaluateEngine = new EvaluateEngine();
                 Double answer = evaluateEngine.evaluate(questionString);
-                answerString = String.valueOf((int) Math.round(answer));
+                answerString = String.valueOf((int) Math.round(answer));*/
+
+                AnswerGenerator answerGenerator = new AnswerGenerator(difficulty);
+                answerString = String.valueOf(answerGenerator.generateAnswer(termsList,operatorList,4));
 
                 return new String[] {questionString,answerString};
             }
@@ -266,9 +287,12 @@ public class QuestionGenerator {
                             + " " + operatorList.get(2) + " " + termsList.get(3)
                                 + " " + operatorList.get(3) + " " + termsList.get(4);
 
-                EvaluateEngine evaluateEngine = new EvaluateEngine();
+                /*EvaluateEngine evaluateEngine = new EvaluateEngine();
                 Double answer = evaluateEngine.evaluate(questionString);
-                answerString = String.valueOf((int) Math.round(answer));
+                answerString = String.valueOf((int) Math.round(answer));*/
+
+                AnswerGenerator answerGenerator = new AnswerGenerator(difficulty);
+                answerString = String.valueOf(answerGenerator.generateAnswer(termsList,operatorList,5));
 
                 return new String[] {questionString,answerString};
 
@@ -281,9 +305,12 @@ public class QuestionGenerator {
                                 + " " + operatorList.get(3) + " " + termsList.get(4)
                                     + " " + operatorList.get(4) + " " + termsList.get(5);
 
-                EvaluateEngine evaluateEngine = new EvaluateEngine();
+                /*EvaluateEngine evaluateEngine = new EvaluateEngine();
                 Double answer = evaluateEngine.evaluate(questionString);
-                answerString = String.valueOf((int) Math.round(answer));
+                answerString = String.valueOf((int) Math.round(answer));*/
+
+                AnswerGenerator answerGenerator = new AnswerGenerator(difficulty);
+                answerString = String.valueOf(answerGenerator.generateAnswer(termsList,operatorList,6));
 
                 return new String[] {questionString,answerString};
 
