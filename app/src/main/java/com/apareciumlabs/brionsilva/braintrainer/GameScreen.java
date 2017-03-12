@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Set;
 
 /**
- * This activity class links with the main screen layout and this displays the questions, answers,
+ * This activity class links with the game screen layout and this displays the questions, answers,
  * results, hints etc.
  *
  * @author  Brion Mario

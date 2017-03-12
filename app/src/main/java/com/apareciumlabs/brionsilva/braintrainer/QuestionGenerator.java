@@ -10,7 +10,11 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Created by brionsilva on 07/03/2017.
+ * This class creates question and answered based on the user defined difficulty level.
+ *
+ * @author  Brion Mario
+ * @version 1.0
+ * @since   2017-03-08
  */
 
 public class QuestionGenerator {
@@ -26,6 +30,14 @@ public class QuestionGenerator {
     //strings to store the question and answer
     String questionString,answerString;
 
+    /**
+     *
+     * Constructor that initializes the difficulty and maximum terms and difficulty level when an
+     * object is made.
+     * P.S : Difficulty level variable isn't used anywhere
+     * @param difficulty the difficulty is passed using this parameter
+     *
+     */
     public QuestionGenerator(String difficulty){
 
         this.difficulty = difficulty;
@@ -71,6 +83,12 @@ public class QuestionGenerator {
         generateQuestion();
     }
 
+    /**
+     * This function generates questions and answers based on the difficulty level and returns them
+     * as an array.
+     *
+     * @return Returns question followed by the answer
+     */
     public String[] generateQuestion(){
 
         switch (difficulty){
@@ -101,7 +119,10 @@ public class QuestionGenerator {
         return null;
     }
 
-    //generating the operator
+    /**
+     * This function randomly generates and returns an operator
+     * @return The randomly generated char operator is returned
+     */
     public char generateOperator(){
 
         Random random = new Random();
@@ -119,7 +140,10 @@ public class QuestionGenerator {
         return '0';
     }
 
-    //generating random number
+    /**
+     * this function randomly generates a number between 1 - 99 and returns it
+     * @return Returns the generated random integer
+     */
     public int generateRandomNumber(){
 
         Random random = new Random();
@@ -131,7 +155,13 @@ public class QuestionGenerator {
 
     }
 
-    //generating numbers to be used in the expression
+    /**
+     * This function checks for the maximum allowed terms per each difficulty leve; and generates a
+     * list of integers
+     *
+     * @param termList List of integers for the expression
+     * @param maximumTerms Maximum number of allowed terms per each difficulty level
+     */
     public void generateNumberList(List termList , int maximumTerms){
 
         for (int i = 0; i < maximumTerms ; i++){
@@ -140,7 +170,14 @@ public class QuestionGenerator {
 
     }
 
-    //generating operators to be used in the expression
+    /**
+     * This function checks for the maximum allowed operators per each difficulty level
+     * and generates a list of operators. the number of operators in an expression is always
+     * maximumTerms-1 .
+     *
+     * @param operatorList List of operators for the expression
+     * @param maximumTerms Maximum number of allowed terms per each difficulty level
+     */
     public void generateOperatorList(List operatorList , int maximumTerms){
 
         for (int i = 0; i < (maximumTerms-1) ; i++){
@@ -149,7 +186,10 @@ public class QuestionGenerator {
 
     }
 
-    //if the difficulty is novice this method generates the question and answer
+    /**
+     * Generates and returns the question and answer for the "NOVICE" difficulty level.
+     * @return Returns the question and answer pair in a String array
+     */
     public String[] generateNovice(){
 
         questionString = termsList.get(0) + " " + operatorList.get(0) + " " + termsList.get(1);
@@ -164,7 +204,10 @@ public class QuestionGenerator {
         return new String[] {questionString,answerString};
     }
 
-    //if the difficulty is easy this method generates the question and answer
+    /**
+     * Generates and returns the question and answer for the "EASY" difficulty level.
+     * @return Returns the question and answer pair in a String array
+     */
     public String[] generateEasy(){
 
         Random random = new Random();
@@ -204,7 +247,10 @@ public class QuestionGenerator {
         return null;
     }
 
-    //if the difficulty is Medium this method generates the question and answer
+    /**
+     * Generates and returns the question and answer for the "MEDIUM" difficulty level.
+     * @return Returns the question and answer pair in a String array
+     */
     public String[] generateMedium(){
 
         Random random = new Random();
@@ -259,7 +305,10 @@ public class QuestionGenerator {
         return null;
     }
 
-    //if the difficulty is Guru this method generates the question and answer
+    /**
+     * Generates and returns the question and answer for the "GURU" difficulty level.
+     * @return Returns the question and answer pair in a String array
+     */
     public String[] generateGuru(){
 
         Random random = new Random();

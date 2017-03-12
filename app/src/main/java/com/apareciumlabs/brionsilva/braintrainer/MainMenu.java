@@ -24,7 +24,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by brionsilva on 07/03/2017.
+ * This activity class links with the main menu layout and this displays four buttons that are
+ * used to create a new game, continue a previus game , see the about page and exit the application.
+ *
+ * @author  Brion Mario
+ * @version 1.0
+ * @since   2017-03-08
  */
 
 public class MainMenu extends AppCompatActivity implements View.OnClickListener{
@@ -101,7 +106,10 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
         }
     }
 
-    //The dialog box to select the difficulty
+    /**
+     * This method prompts the user with a list of difficulty levels and passes the difficulty
+     * selected using the intet.putExtra() method to the GameScreen class.
+     */
     public void showDifficultyDialog()
     {
         List<String> difficulty = new ArrayList<String>();
@@ -135,7 +143,11 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
         alertDialogObject.show();
     }
 
-    //The method for the popup window
+    /**
+     * This junction creates just a simple popup window that has a single button.
+     *
+     * @param v The current view instance is passed
+     */
     private void aboutPopupWindow(View v) {
         try {
             //get an instance of layoutinflater
@@ -163,7 +175,11 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
         }
     }
 
-    //Game Exit Dialog
+    /**
+     * This function is triggered when the exit button is pressed. The user can either press YES
+     * to save and exit the app or NO to just exit the application
+     *
+     */
     public void gameExitDialog()
     {
         AlertDialog.Builder builder1 = new AlertDialog.Builder(this , R.style.BrionDialogTheme);
@@ -193,7 +209,5 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
         AlertDialog alert11 = builder1.create();
         alert11.show();
     }
-
-
 
 }
