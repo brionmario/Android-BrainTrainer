@@ -3,7 +3,9 @@ package com.apareciumlabs.brionsilva.braintrainer;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -59,7 +61,24 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
                 break;
             }
             case R.id.continueBtn :{
+
                 //redirect to new game activity
+                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+
+                Intent intent = new Intent(getBaseContext(), GameScreen.class);
+
+
+                intent.putExtra("isContinueButtonClicked" , true);
+                intent.putExtra("Difficulty" , sp.getString("Difficulty",null));
+                intent.putExtra("Hints" , sp.getBoolean("Hints" , false));
+                intent.putExtra("TimeLeft", sp.getLong("TimeLeft" , 0));
+                intent.putExtra("Question",sp.getString("Question" , "Question"));
+                intent.putExtra("Answer" , sp.getString("Answer" , "Answer"));
+                intent.putExtra("Result" , sp.getString("Result" , "RESULT"));
+                intent.putExtra("QuestionNumber", sp.getInt("QuestionNumber" , 1));
+
+                startActivity(intent);
+
                 break;
             }
             case R.id.aboutBtn :{

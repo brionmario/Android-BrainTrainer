@@ -3,20 +3,21 @@ package com.apareciumlabs.brionsilva.braintrainer;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.CountDownTimer;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 public class GameScreen extends AppCompatActivity implements View.OnClickListener,CompoundButton.OnCheckedChangeListener {
 
@@ -56,27 +57,25 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
     //List to store the scores
     ArrayList<String> scores;
 
+    //Save data
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+
+    //boolean to store if the continue button clicked
+    Boolean isContinueClicked;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        //initialize all the variables to default
-        numQuestions = 0;
-        tries = 1;
-        isHashBtnClicked = false;
-        isHintsChecked = false;
-        isCounterRunning = false;
-
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_screen);
 
         Intent intent = getIntent();
 
-        difficulty = intent.getStringExtra("Difficulty");
+        isContinueClicked = intent.getBooleanExtra("isContinueButtonClicked" , false);
 
         //initializing the textview to display the countdown timer
         timeTV = (TextView) findViewById(R.id.timeTextView);
-        timeTV.setText("");
 
         //initializing the hints switch
         hintsSwitch = (Switch)  findViewById(R.id.hintSwitch);
@@ -86,16 +85,15 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
         questionTV = (TextView) findViewById(R.id.questionTextView);
         answerTV = (TextView) findViewById(R.id.answerTextView);
 
-        //setting the answer to be ? initially
-        answerTV.setText("?");
+
 
         //initializing the result text view
         resultTV = (TextView) findViewById(R.id.resultTextView);
-        resultTV.setText("");
+
 
         //initializing the hints text view
         hintsTV = (TextView) findViewById(R.id.lblHint);
-        hintsTV.setText("Hints are OFF");
+
 
         //initialising the utility buttons
         deleteBtn = (Button) findViewById(R.id.delBtn);
@@ -141,10 +139,64 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
         //initialize the score list
         scores = new ArrayList<>();
 
-        //initiate the first question
-        makeQuestion();
+
+
+
+
+        if(isContinueClicked){
+            //Toast.makeText(getBaseContext(),"Continue clicked",Toast.LENGTH_SHORT).show();
+
+            //Data to be passed
+            /*isHashBtnClicked = intent.getBooleanExtra("Hints",false);
+            secondsLeft = intent.getLongExtra("TimeLeft",0);
+            questionAnswer[0] = intent.getStringExtra("Question");
+            questionAnswer[1] = "88";
+            resultTV.setText(intent.getStringExtra("Result"));
+            numQuestions = intent.getIntExtra("QuestionNumber",1); */
+
+            isHintsChecked = intent.getBooleanExtra("Hints",true);
+            difficulty = intent.getStringExtra("Difficulty");
+            Toast.makeText(getBaseContext(), difficulty + " Difficulty selected",Toast.LENGTH_SHORT).show();
+            questionTV.setText(intent.getStringExtra("Question"));
+            answerTV.setText(intent.getStringExtra("Answer"));
+            resultTV.setText(intent.getStringExtra("Result"));
+            numQuestions = intent.getIntExtra("QuestionNumber" , 0);
+
+            EvaluateEngine evaluateEngine = new EvaluateEngine();
+            Double answer = evaluateEngine.evaluate(questionTV.getText().toString());
+            String answerString = String.valueOf((int) Math.round(answer));
+
+            Toast.makeText(getBaseContext(), "Q"  + numQuestions + " Ans" + answerString,Toast.LENGTH_SHORT).show();
+
+
+        }else {
+
+            //initialize all the variables to default
+            numQuestions = 0;
+            tries = 1;
+            isHashBtnClicked = false;
+            isHintsChecked = false;
+            isCounterRunning = false;
+
+            //Toast.makeText(getBaseContext(),"New game clicked",Toast.LENGTH_SHORT).show();
+
+            difficulty = intent.getStringExtra("Difficulty");
+            timeTV.setText("");
+            //setting the answer to be ? initially
+            answerTV.setText("?");
+            resultTV.setText("");
+            hintsTV.setText("Hints are OFF");
+
+            //initiate the first question
+            makeQuestion();
+
+        }
+
         //start the countdown timer
         mCountDownTimer.start();
+
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        editor = sharedPreferences.edit();
 
     }
 
@@ -214,8 +266,13 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
                 break;
             }
             case R.id.hashBtn:{
-                //call the validate method
-                validate();
+
+                if(answerTV.getText().toString().equals("")){
+                    alertBox("Please input a valid answer","OKAY");
+                } else{
+                    //call the validate method
+                    validate();
+                }
                 break;
             }
             case R.id.minusBtn:{
@@ -298,13 +355,16 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
             }else {
 
                 if(tries < 5) {
+
                     if (Integer.parseInt(submittedAnswer) > Integer.parseInt(questionAnswer[1])) {
 
-                        alertBox("Less", "Okay");
+                        resultTV.setText("LESS");
+                        resultTV.setTextColor(Color.BLUE);
 
                     } else if (Integer.parseInt(submittedAnswer) < Integer.parseInt(questionAnswer[1])) {
 
-                        alertBox("Greater", "Okay");
+                        resultTV.setText("GREATER");
+                        resultTV.setTextColor(Color.BLUE);
 
                     }
                     Toast.makeText(getBaseContext() , "Attempt number " + tries , Toast.LENGTH_SHORT).show();
@@ -323,7 +383,6 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
     }
 
     //Alert Dialog boy reusable  method
-
     public void alertBox(String Message , String Button){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(true);
@@ -404,8 +463,6 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
                 isCounterRunning = false;
             }
 
-
-
         }
     };
 
@@ -417,8 +474,12 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
     public void onBackPressed() {
         super.onBackPressed();
         mCountDownTimer.cancel();
+
+        //save the current game by calling savegamedata method
+        saveGameData();
+
         Intent intent = new Intent(this, MainMenu.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         finish(); // finish the current activity
     }
@@ -427,6 +488,20 @@ public class GameScreen extends AppCompatActivity implements View.OnClickListene
 
         int score = (int) (100 / (10 - time_remaining));
         return score;
+    }
+
+    public void saveGameData(){
+
+        //Data to be passed
+        editor.putString("Difficulty" , difficulty);
+        editor.putBoolean("Hints" , isHintsChecked);
+        editor.putLong("TimeLeft" , secondsLeft);
+        editor.putString("Question" , questionAnswer[0]);
+        editor.putString("Answer" , answerTV.getText().toString());
+        editor.putString("Result" , resultTV.getText().toString());
+        editor.putInt("QuestionNumber" , numQuestions);
+        //editor.putStringSet("Scores" , (Set<String>) scores);
+        editor.commit();
     }
 
 }
